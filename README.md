@@ -1,9 +1,8 @@
-Certainly! To provide installation guidelines in a README file for GitHub, you can create a file named `README.md` in the root of your project. Here's a template you can use:
 
-```markdown
-# Your Project Name
 
-Brief description of your project.
+# Boneloss
+
+.
 
 ## Installation
 
