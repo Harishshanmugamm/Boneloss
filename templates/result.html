@@ -136,7 +136,7 @@
     <div class="main-content">
     
 
-        <span id='bonel'class="diagnostic h2">val={{bone_loss_percentage}}</span>
+        <span id='bonel'class="diagnostic h2"> val={{bone_loss_percentage}}</span>
         <br><br>
 
         <div class="container mt-4">
@@ -161,11 +161,11 @@
             
                     <!-- Aetiotropic Phase -->
                     <div>
-                        <h4>Aetiotropic Phase</h4>
+                        <h4>Phase I: Aetiotropic Phase</h4>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a>Scaling and Rooting Phase</a></li>
-                            <li class="list-group-item"><a>Temporary Splinting / Prosthesis</a></li>
-                            <li class="list-group-item"><a>Occlusal Corrections</a></li>
+                            <li class="list-group-item"><a >Scaling and Rooting Phase</a></li>
+                            <li class="list-group-item"><a >Temporary Splinting / Prosthesis</a></li>
+                            <li class="list-group-item"><a >Occlusal Corrections</a></li>
                             <li class="list-group-item"><a>Excavation of Cause and Restoration(Temporary/final)</a></li>
                             <li class="list-group-item"><a>Antimicrobial therapy(local/Systemic)</a></li>
                         </ul>
@@ -173,7 +173,7 @@
             
                     <!-- Surgical Phase -->
                     <div>
-                        <h4>Surgical Phase</h4>
+                        <h4>Phase II: Surgical Phase</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a>Flap for Debridement</a></li>
                             <li class="list-group-item"><a>Resective Osseous Surgery</a></li>
@@ -186,7 +186,7 @@
             
                     <!-- Restoration Phase -->
                     <div>
-                        <h4>Restoration Phase</h4>
+                        <h4>Phase III: Restoration Phase</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a>Final Restoration</a></li>
                             <li class="list-group-item"><a>Fixed/and or Removable Prosthesis</a></li>
@@ -195,10 +195,24 @@
             
                     <!-- Maintenance Phase -->
                     <div>
-                        <h4>Maintenance Phase</h4>
+                        <h4>Phase IV: Maintenance Phase</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a>Overall Systemic Health</a></li>
                             <li class="list-group-item"><a>Scheduling the Next Recall Visit</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4>Treatment Videos</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="https://youtube.com/shorts/3Mz1fZlYr1w?si=HuaRrC42gJyE40Wg" target="_blank">Scaling and Root Planning</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/shorts/IFJM-xKjZ80"target="_blank">Splinting</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/shorts/jL6C-j-HoJg" target="_blank">Hand Scaling</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/watch?v=3WGW6m6swPY" target="_blank">Implant</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/shorts/eSpK_pvojIE" target="_blank">Laser Therapy</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/watch?v=fcsDZk48wJs" target="_blank">Free Gengiaval Geaft</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/shorts/mA5xc-ac0DA" target="_blank">Osscous Surgery</a></li>
+                            <li class="list-group-item"><a href="https://www.youtube.com/shorts/JKKDMJ86YWw" target="_blank">Root Canal Treatment</a></li>
                         </ul>
                     </div>
             
@@ -264,12 +278,14 @@
     // Function to change the CBCT image source
     function changeImage(imagePath, condition, newval) {
         document.getElementById('imageContainer').src = imagePath;
-        var imageName = imagePath.split('/').pop().replace('.jpg', '').replace(/_/g, ' ');
+        var imageName = Number(imagePath.split('/').pop().replace('.jpg', '').replace(/_/g, ' '));
+        console.log(imageName)
         var bonea = document.getElementById('bonel').getAttribute('val');
+        
+        
         var table1 = document.getElementById('table1');
         var table2 = document.getElementById('table2');
         var table3 = document.getElementById('table3');
-
         var diagnosticElement = document.getElementById('diagnostic');
         switch (condition) {
             case 'current':
@@ -279,18 +295,19 @@
                 var stage;
                 if (imageName < 15 || bonea < 15) {
                     stage = 'Low Boneloss (Stage 1 Grade A Periodontitis-based on bone loss factor)';
-                } if (15 <= imageName && imageName <= 35) {
+                } else if (15 <= imageName && imageName <= 35) {
                     stage = 'Moderate Boneloss (Stage 2 Grade B Periodontitis-based on bone loss factor)';
-                } if (35 < imageName && imageName <= 50) {
+                } else if (35 < imageName && imageName <= 50) {
                     stage = 'Severe Boneloss (Stage 3 Grade B Periodontitis-based on bone loss factor)';
-                } if (50 < imageName && imageName <= 80) {
+                } else if (50 < imageName && imageName <= 80) {
                     stage = 'Severe Boneloss (Stage 4 Grade C Periodontitis-based on bone loss factor)';
                 } 
                 diagnosticElement.innerText = stage;
                 break;
             default:
                 diagnosticElement.innerText = 'Stage Pertionitis';
-        }switch (newval) {
+        }
+        switch (newval) {
             case '1':
             case '5':
             case '10':
