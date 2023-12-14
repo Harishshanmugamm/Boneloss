@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boneloss</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-brand img {
+            max-height: 40px;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            font-weight: bold;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        .patient-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .patient-info {
+            margin-top: 20px;
+        }
+
+        .patient-info h2 {
+            color: #17a2b8;
+        }
+
+        .treatment-plan h2 {
+            color: #ffc107;
+            margin-top: 20px;
+        }
+
+        .diagnostic h2 {
+            color: #28a745;
+            margin-top: 20px;
+        }
+
+        /* Footer styles */
+        #footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-logo img {
+            max-height: 40px;
+        }
+
+        .copyright {
+            margin-top: 10px;
+        }
+
+        /* Scroll to top button */
+        .arrow {
+            position: fixed;
+            bottom: 4%;
+            right: 4%;
+        }
+
+        .arrow img {
+            width: 50px;
+        }
+        #bonel {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="font-roboto">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="logo"><img src="{{url_for('static', filename='./images/logo.png')}}"
+                    alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fa-solid fa-bars" style="color: #2b4f9c; font-size: 23px;"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href = '/'>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href = '/'>Calculate & Analyse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href = '/'>About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="main-content">
+    
+
+        <span id='bonel'class="diagnostic h2">val={{bone_loss_percentage}}</span>
+        <br><br>
+
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Left Side - Image Box and Table -->
+                <div class="col-md-6">
+                    <h2 class="patient-info">Image</h2>
+                    <img src="data:image/png;base64,{{ decoded_image }}" id="imageContainer" class="img-fluid"
+                        alt="Image Container">
+                    <h2 class="mt-4 patient-info" style="color: aqua;">Patient Information Table</h2>
+                <h3>PATIENT NAME: {{ patient_name }}</h3>
+                <h3> AGE: {{ patient_age }}</h3>
+                <p>Reference point is crest of the bone</p>
+                {% include 'table.html' %}
+                <div class="diagnostic-container">
+                    <h2 class="diagnostic-title">Diagnostic: <span class="diagnostic-text" id="diagnostic">{{ diagnostic }}</span></h2>
+                </div>
+                
+             <div class="mt-6">
+                <h2 class="text-center mb-4">Treatment Plan</h2>
+                <div id="treatmentPlan">
+            
+                    <!-- Aetiotropic Phase -->
+                    <div>
+                        <h4>Aetiotropic Phase</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a>Scaling and Rooting Phase</a></li>
+                            <li class="list-group-item"><a>Temporary Splinting / Prosthesis</a></li>
+                            <li class="list-group-item"><a>Occlusal Corrections</a></li>
+                            <li class="list-group-item"><a>Excavation of Cause and Restoration(Temporary/final)</a></li>
+                            <li class="list-group-item"><a>Antimicrobial therapy(local/Systemic)</a></li>
+                        </ul>
+                    </div>
+            
+                    <!-- Surgical Phase -->
+                    <div>
+                        <h4>Surgical Phase</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a>Flap for Debridement</a></li>
+                            <li class="list-group-item"><a>Resective Osseous Surgery</a></li>
+                            <li class="list-group-item"><a>Regenerative Osseous Surgery</a></li>
+                            <li class="list-group-item"><a>Periodontal Plastic Surgery</a></li>
+                            <li class="list-group-item"><a>Implant</a></li>
+                            <li class="list-group-item"><a>Endodontic Therapy</a></li>
+                        </ul>
+                    </div>
+            
+                    <!-- Restoration Phase -->
+                    <div>
+                        <h4>Restoration Phase</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a>Final Restoration</a></li>
+                            <li class="list-group-item"><a>Fixed/and or Removable Prosthesis</a></li>
+                        </ul>
+                    </div>
+            
+                    <!-- Maintenance Phase -->
+                    <div>
+                        <h4>Maintenance Phase</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a>Overall Systemic Health</a></li>
+                            <li class="list-group-item"><a>Scheduling the Next Recall Visit</a></li>
+                        </ul>
+                    </div>
+            
+                </div>
+            </div>
+            <div class="prognosis-container">
+                <h2 class="prognosis-heading"><b>Prognosis:</b></h2>
+                <p class="prognosis-text">{{ prognosis }}</p>
+            </div>
+            
+        </div>
+            <!-- Right Side - Buttons -->
+            <div class="col-md-6">
+                <h2 class="patient-info">Options</h2>
+                <div class="btn-group-vertical">
+                    <button type="button" class="btn btn-primary" onclick="changeImage('data:image/png;base64,{{ decoded_image }}','current','1')">Current</button>
+                    <button type="button" class="btn btn-success" onclick="changeImage('{{ after_5_years_image_path }}','5_years','5')">After 5 Years</button>
+                    <button type="button" class="btn btn-info" onclick="changeImage('{{ after_10_years_image_path }}','10_years','10')">After 10 Years</button>
+                    <button type="button" class="btn btn-warning" onclick="changeImage('{{ after_15_years_image_path }}','15_years','15')">After 15 Years</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+  
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="footer-logo text-center"><img src="{{url_for('static', filename='./images/logo.png')}}"
+            alt="Footer Logo"></div>
+    <div class="navbar navbar-expand-lg place-content-center">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav1 me-auto mb-9 mb-lg-0">
+                <li class="nav-item1 ">
+                    <a class="nav-link1 active " aria-current="page" href = '/'>Home</a>
+                </li>
+                <li class="nav-item1">
+                    <a class="nav-link1" href = '/'>Calculate</a>
+                </li>
+                <li class="nav-item1">
+                    <a class="nav-link1" href = '/'>About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright text-center">
+        &copy; Copyright <strong><span>Boneless</span></strong>. All Rights Reserved
+    </div>
+</footer>
+<!-- End Footer -->
+
+<a href="#" class="arrow fixed bottom-4 right-4"><img
+        src="{{url_for('static', filename='./images/up-arrow.png')}}" width="50px" alt="Scroll to Top"></a>
+</div>
+
+<!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    // Function to change the CBCT image source
+    function changeImage(imagePath, condition, newval) {
+        document.getElementById('imageContainer').src = imagePath;
+        var imageName = imagePath.split('/').pop().replace('.jpg', '').replace(/_/g, ' ');
+        var bonea = document.getElementById('bonel').getAttribute('val');
+        var table1 = document.getElementById('table1');
+        var table2 = document.getElementById('table2');
+        var table3 = document.getElementById('table3');
+
+        var diagnosticElement = document.getElementById('diagnostic');
+        switch (condition) {
+            case 'current':
+            case '5_years':
+            case '10_years':
+            case '15_years':
+                var stage;
+                if (imageName < 15 || bonea < 15) {
+                    stage = 'Low Boneloss (Stage 1 Grade A Periodontitis-based on bone loss factor)';
+                } if (15 <= imageName && imageName <= 35) {
+                    stage = 'Moderate Boneloss (Stage 2 Grade B Periodontitis-based on bone loss factor)';
+                } if (35 < imageName && imageName <= 50) {
+                    stage = 'Severe Boneloss (Stage 3 Grade B Periodontitis-based on bone loss factor)';
+                } if (50 < imageName && imageName <= 80) {
+                    stage = 'Severe Boneloss (Stage 4 Grade C Periodontitis-based on bone loss factor)';
+                } 
+                diagnosticElement.innerText = stage;
+                break;
+            default:
+                diagnosticElement.innerText = 'Stage Pertionitis';
+        }switch (newval) {
+            case '1':
+            case '5':
+            case '10':
+            case '15':
+                if (imageName < 15 || bonea < 15) {
+                    table1.style.display = 'table';
+                    table2.style.display = 'none';
+                    table3.style.display = 'none';
+                } else if (15 <= imageName && imageName <= 35) {
+                    table1.style.display = 'table';
+                    table2.style.display = 'none';
+                    table3.style.display = 'none';
+                } else if (35 < imageName && imageName <= 50) {
+                    table1.style.display = 'none';
+                    table2.style.display = 'table';
+                    table3.style.display = 'none';
+                } else if (50 < imageName && imageName <= 80) {
+                    table1.style.display = 'none';
+                    table2.style.display = 'table';
+                    table3.style.display = 'none';
+                } else {
+                    table1.style.display = 'none';
+                    table2.style.display = 'none';
+                    table3.style.display = 'none';
+                }
+                break;
+            default:
+                table1.style.display = 'none';
+                table2.style.display = 'none';
+                table3.style.display = 'none';
+                break;
+        }
+
+    }
+
+    if (performance.navigation.type === 1) {
+            
+            window.location.href = '/';
+        }
+</script>
+  </body>
+</html>
